@@ -1,0 +1,23 @@
+classification:
+    explore: true
+    file: 'Datasets/star_classification.csv'
+    head: true
+    generate_file: true
+    df_columns: true
+    is_null: true
+    duplicated_sum: true
+    describe: true
+    value_counts: true
+    info: true
+
+clustering:
+    explore: true
+    file: 'Datasets/Pokemon.csv'
+    head: true
+    generate_file: true
+    df_columns: true
+    is_null: true
+    duplicated_sum: true
+    value_counts: false
+    describe: true
+    info: true
