@@ -2,6 +2,7 @@ classification:
     explore: true
     file: 'Datasets/star_classification.csv'
     head: true
+    dshape: true
     generate_file: true
     df_columns: true
     is_null: true
@@ -15,6 +16,7 @@ clustering:
     explore: true
     file: 'Datasets/Pokemon.csv'
     head: true
+    dshape: true
     generate_file: true
     df_columns: true
     is_null: true

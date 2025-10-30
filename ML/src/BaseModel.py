@@ -6,12 +6,13 @@ import io
 class BaseModel:
     def __init__(
         self, file_route, generate_file=True,
-        head=True, columns=True, info=True, describe=True,
+        head=True,dshape=True, columns=True, info=True, describe=True,
         nulls=True, duplicated_sum=True, distribution=True, distribution_column=None, model_name="Dataset_Placeholder"
     ):
         self.df = pd.read_csv(file_route)
         self.generate_file = generate_file
         self.head = head
+        self.dshape = dshape
         self.columns = columns
         self.info = info
         self.describe = describe
@@ -93,6 +94,10 @@ class BaseModel:
         if self.head:
             html.append("<h2>Primeras filas del DataFrame</h2>")
             html.append(self.df.head().to_html(classes='table table-striped', border=0))
+
+        if self.dshape:
+            html.append("<h2>Dimensiones del DataFrame</h2>")
+            html.append(f"<p>El DataFrame tiene <strong>{self.df.shape[0]}</strong> filas y <strong>{self.df.shape[1]}</strong> columnas.</p>")
 
         if self.columns:
             html.append("<h2>Columnas del DataFrame</h2>")
