@@ -1,7 +1,8 @@
 import argparse
 import yaml
 from .src.data_summary import generate_data_summary
-
+from .src.train_supervised import train_supervised
+from .src.tune_supervised import tune_supervised
 
 def main():
 
@@ -40,26 +41,29 @@ def main():
 
     args = parser.parse_args()
 
-    match args.command:
-        case 'data-summary':
-            with open(args.config, 'r') as f:
-                config = yaml.safe_load(f)
+    with open(args.config, 'r') as f:
+        config = yaml.safe_load(f)
+        match args.command:
+            case 'data-summary':
+                print("Generando resumen exploratorio de los datos...")
                 generate_data_summary(config)
 
-        case 'train-supervised':
-            raise NotImplementedError("train-supervised no está implementado aún.")
+            case 'train-supervised':
+                print("Iniciando entrenamiento supervisado...")
+                train_supervised(config)
 
-        case 'tune-supervised':
-            raise NotImplementedError("tune-supervised no está implementado aún.")
+            case 'tune-supervised':
+                print("Iniciando tuning supervisado...")
+                tune_supervised(config)
 
-        case 'cluster-kmeans':
-            raise NotImplementedError("cluster-kmeans no está implementado aún.")
+            case 'cluster-kmeans':
+                raise NotImplementedError("cluster-kmeans no está implementado aún.")
 
-        case 'report':
-            raise NotImplementedError("report no está implementado aún.")
+            case 'report':
+                raise NotImplementedError("report no está implementado aún.")
 
-        case _:
-            parser.print_help()
+            case _:
+                parser.print_help()
 
 
 if __name__ == '__main__':

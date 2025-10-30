@@ -6,7 +6,7 @@ import io
 class BaseModel:
     def __init__(
         self, file_route, generate_file=True,
-        head=True,dshape=True, columns=True, info=True, describe=True,
+        head=True, dshape=True, columns=True, info=True, describe=True,
         nulls=True, duplicated_sum=True, distribution=True, distribution_column=None, model_name="Dataset_Placeholder"
     ):
         self.df = pd.read_csv(file_route)
@@ -92,35 +92,43 @@ class BaseModel:
         html.append(f"<p style='text-align:center'><em>Generado el {datetime.now().strftime('%d/%m/%Y %H:%M:%S')}</em></p>")
 
         if self.head:
+            print(f"Generando primeras filas de {self.model_name}...")
             html.append("<h2>Primeras filas del DataFrame</h2>")
             html.append(self.df.head().to_html(classes='table table-striped', border=0))
 
         if self.dshape:
+            print(f"Generando dimensiones de {self.model_name}...")
             html.append("<h2>Dimensiones del DataFrame</h2>")
             html.append(f"<p>El DataFrame tiene <strong>{self.df.shape[0]}</strong> filas y <strong>{self.df.shape[1]}</strong> columnas.</p>")
 
         if self.columns:
+            print(f"Generando lista de columnas de {self.model_name}...")
             html.append("<h2>Columnas del DataFrame</h2>")
             html.append("<ul>" + "".join(f"<li>{c}</li>" for c in self.df.columns) + "</ul>")
 
         if self.info:
+            print(f"Generando información del DataFrame {self.model_name}...")
             html.append("<h2>Información del DataFrame</h2>")
             html.append(self._get_info_html())
 
         if self.describe:
+            print(f"Generando estadísticas descriptivas de {self.model_name}...")
             html.append("<h2>Estadísticas descriptivas</h2>")
             html.append(self.df.describe(include='all').to_html(classes='table', border=0))
 
         if self.nulls:
+            print(f"Generando conteo de valores nulos en {self.model_name}...")
             html.append("<h2>Valores nulos por columna</h2>")
             nulls_df = self.df.isnull().sum().to_frame("Cantidad de Nulos")
             html.append(nulls_df.to_html(classes='table', border=0))
 
         if self.duplicated_sum:
+            print(f"Generando conteo de filas duplicadas en {self.model_name}...")
             html.append("<h2>Cantidad de filas duplicadas</h2>")
             html.append(f"<p>{self.df.duplicated().sum()}</p>")
 
         if self.distribution:
+            print(f"Generando distribución de valores en {self.model_name}...")
             html.append("<h2>Distribución de valores</h2>")
             try:
                 if self.distribution_column:
@@ -133,7 +141,8 @@ class BaseModel:
         report = "\n".join(html)
 
         if self.generate_file:
-            file_name = f"html_reports/informe_datos_{datetime.now().strftime('%Y%m%d_%H%M%S')}.html"
+            print(f"Guardando informe exploratorio de {self.model_name} en archivo HTML...")
+            file_name = f"artifacts/informe_datos_{datetime.now().strftime('%Y%m%d_%H%M%S')}.html"
             with open(file_name, "w", encoding="utf-8") as f:
                 f.write(report)
             print(f" Informe generado: {file_name}")
@@ -141,4 +150,5 @@ class BaseModel:
         return report
 
     def train(self):
-        pass
+        raise NotImplementedError("El método train() debe ser implementado en las subclases.")
+
