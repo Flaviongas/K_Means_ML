@@ -6,8 +6,9 @@ classification:
     df_columns: true
     is_null: true
     duplicated_sum: true
-    describe: true
     value_counts: true
+    value_counts_column: 'class'
+    describe: true
     info: true
 
 clustering:
@@ -19,5 +20,6 @@ clustering:
     is_null: true
     duplicated_sum: true
     value_counts: false
+    value_counts_column: ''
     describe: true
     info: true
