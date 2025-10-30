@@ -3,6 +3,8 @@ import yaml
 from .src.data_summary import generate_data_summary
 from .src.train_supervised import train_supervised
 from .src.tune_supervised import tune_supervised
+from .src.cluster_kmeans import cluster_kmeans
+
 
 def main():
 
@@ -57,7 +59,8 @@ def main():
                 tune_supervised(config)
 
             case 'cluster-kmeans':
-                raise NotImplementedError("cluster-kmeans no está implementado aún.")
+                print("Iniciando clustering KMeans...")
+                cluster_kmeans(config)
 
             case 'report':
                 raise NotImplementedError("report no está implementado aún.")
